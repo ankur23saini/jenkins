@@ -1,0 +1,31 @@
+properties([
+parameters([
+choice(name: 'REQUESTED_ACTION', choices: ['CreateApp','DeleteApp']),
+string(defaultValue: '', description: '', name: 'BEYOND_PUBLISH_SRC_CLONE_URL'),
+string(defaultValue: '', description: '', name: 'BEYOND_PUBLISH_SRC_BRANCH_FOR_CLONE'),
+string(defaultValue: 'ssh://git@bitbucket.oci.oraclecorp.com:7999/an/faw-pipeline-qadistribution.git', description: '', name: 'BEYOND_PUBLISH_TGT_CLONE_URL'),
+string(defaultValue: '', description: '', name: 'BEYOND_PUBLISH_TGT_BRANCH_FROM_CLONE'),
+string(defaultValue: 'BEYOND_PUBLISH', description: '', name: 'BUILDTYPE'),
+string(defaultValue: '10.5.0', description: '', name: 'DMPATCH_VERSION'),
+string(defaultValue: "\${BUILD_NUMBER}", description: '', name: 'BUILD_NUMBER'),
+string(defaultValue: '', description: '', name: 'EMAIL_ON_COMPLETION')
+])
+])
+
+pipeline{
+    agent any
+stages{
+  stage("firt stage"){
+      steps {
+    echo "$REQUESTED_ACTION"
+      }
+  }
+  stage("second stage"){
+    steps {
+    echo "$BEYOND_PUBLISH_SRC_CLONE_URL"
+    }
+
+  }
+}
+
+}
