@@ -20,7 +20,7 @@ pipeline {
     stages {
         stage('EnvSub Example') {
             steps {
-                dir('/home/jenkins/agent') {
+                //dir('/home/jenkins/agent') {
                 script {
                     // Creating a temporary file with a template
                     writeFile file: 'template.txt', text: 'Message: ${VAR1} ${VAR2} is ${VAR3} of age ${VAR4}'
@@ -30,7 +30,8 @@ pipeline {
                     envsubst < template.txt > output.txt
                     cat output.txt
                     '''
-                } }
+//                } 
+}
             }
         }
     }
