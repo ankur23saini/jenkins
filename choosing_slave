@@ -10,11 +10,11 @@ string(defaultValue: '', description: 'Age', name: 'AGE'),
 
 if ( "$REGION" == "Mumbai" )
 {
-SLAVE=slave-01
+SLAVE="slave-01"
 }
 else if ( "$REGION" == "Delhi" )
 {
-SLAVE=Master
+SLAVE="Master"
 }
 pipeline {
     agent { label "$SLAVE"}
