@@ -1,0 +1,44 @@
+properties([
+parameters([
+choice(name: 'REGION', choices: ['Mumbai','Delhi']),
+string(defaultValue: 'Plz choose Initials', description: 'Choose Initials from Mr. Mrs. Ms. Sh. Smt.', name: 'INITIALS' ),
+string(defaultValue: '', description: 'Name', name: 'NAME'),
+choice(name: 'GENDER', choices: ['Male','Female']),
+string(defaultValue: '', description: 'Age', name: 'AGE'),
+])
+])
+
+if ( "$REGION" == "Mumbai" )
+{
+SLAVE=slave-01
+}
+else if ( "$REGION" == "Delhi" )
+{
+SLAVE=Master
+}
+pipeline {
+    agent { label "$SLAVE"}
+    options { disableConcurrentBuilds() }
+    environment {
+        VAR1 = "$INITIALS"
+        VAR2 = "$NAME"
+        VAR3 = "$GENDER"
+        VAR4 = "$AGE"
+    }
+    stages {
+        stage('EnvSub Example') {
+            steps {
+                script {
+                    // Creating a temporary file with a template
+                    writeFile file: 'template.txt', text: 'Message: ${VAR1} ${VAR2} is ${VAR3} of age ${VAR4}'
+                    
+                    // Running envsubst to substitute environment variables in the file
+                    sh '''
+                    envsubst < template.txt > output.txt
+                    cat output.txt
+                    '''
+}
+            }
+        }
+    }
+}
